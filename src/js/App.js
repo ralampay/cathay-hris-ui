@@ -1,40 +1,14 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import EmployeeForm from "./employee_masters/Form";
-import EmployeeIndex from "./employee_masters/Index";
+import EmployeeIndex from "./employees/Index";
 
 export default App = () => {
-    const [employees, setEmployees] = useState([
-        {
-            id: 1,
-            firstName: "John",
-            lastName: "Lloyd",
-            gender: "M",
-            mobileNumber: "+63971111111"
-        },
-        {
-            id: 2,
-            firstName: "Bea",
-            lastName: "Alonzo",
-            gender: "F",
-            mobileNumber: "+63971111112"
-        }
-    ]);
-
-    const deleteEmployee = (employee) => {
-        console.log(`Deleting employee ${employee.id}`);
-    }
-
     return (
-        <div>
+        <div className="container">
             <Header/>
             Cathay HRIS UI
-            <EmployeeForm/>
-            <EmployeeIndex
-                employees={employees}
-                handleDelete={deleteEmployee}
-            />
+            <EmployeeIndex/>
             <Footer/>
         </div>
     )
