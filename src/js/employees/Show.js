@@ -5,6 +5,8 @@ import { EMPLOYEE } from "../models/employee";
 
 export default Show = () => {
 
+    // Exercise 2: Create a button to go back to /employees
+
     const [employee, setEmployee] = useState(EMPLOYEE);
 
     const {
