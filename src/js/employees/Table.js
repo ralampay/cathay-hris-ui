@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default Table = ({ employees }) => {
+
+    const navigate = useNavigate();
+
     return (
         <table className="table table-bordered table-sm">
             <thead>
@@ -13,6 +17,9 @@ export default Table = ({ employees }) => {
                     </th>
                     <th>
                         Mobile Number
+                    </th>
+                    <th>
+                        Actions
                     </th>
                 </tr>
             </thead>
@@ -28,6 +35,16 @@ export default Table = ({ employees }) => {
                             </td>
                             <td>
                                 {employee.mobileNumber}
+                            </td>
+                            <td>
+                                <button 
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        navigate(`/employees/${employee.id}`)
+                                    }}
+                                >
+                                    Show
+                                </button>
                             </td>
                         </tr>
                     )

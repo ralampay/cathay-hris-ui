@@ -15,30 +15,45 @@ export default Index = () => {
 
     return (
         <div>
-            <input
-                className="form-control"
-                value={args.q}
-                onChange={(event) => {
-                    setArgs({...args,
-                        q: event.target.value
-                    })
-                }}
-            />
-
-            <select
-                className="form-control"
-                value={args.gender}
-                onChange={(event) => {
-                    setArgs({...args,
-                        gender: event.target.value
-                    })
-                }}
-            >
-                <option value="">-- SELECT --</option>
-                <option value="F">Female</option>
-                <option value="M">Male</option>
-            </select>
-
+            <div className="row">
+                <div className="col">
+                    <div className="form-group">
+                        <label>
+                            Query by Name
+                        </label>
+                        <input
+                            className="form-control"
+                            value={args.q}
+                            onChange={(event) => {
+                                setArgs({...args,
+                                    q: event.target.value
+                                })
+                            }}
+                        />
+                    </div>
+                </div>
+                <div className="col">
+                    <div className="form-group">
+                        <label>
+                            Gender
+                        </label>
+                        <select
+                            className="form-control"
+                            value={args.gender}
+                            onChange={(event) => {
+                                setArgs({...args,
+                                    gender: event.target.value
+                                })
+                            }}
+                        >
+                            <option value="">-- SELECT --</option>
+                            <option value="F">Female</option>
+                            <option value="M">Male</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div className="mt-2"/>
             <Table employees={employees}/>
         </div>
     )
