@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import EmployeeIndex from "./employees/Index";
 import EmployeeShow from "./employees/Show";
+import Dashboard from "./Dashboard";
 import {
     Routes,
     Route
@@ -20,6 +21,10 @@ export default App = () => {
             <Routes>
                 <Route
                     path="/"
+                    element={<Dashboard/>}
+                />
+                <Route
+                    path="/employees"
                     element={<EmployeeIndex/>}
                 />
                 <Route

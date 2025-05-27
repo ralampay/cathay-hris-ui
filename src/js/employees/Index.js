@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import { getEmployees } from "../services/EmployeeService";
+import { useNavigate } from "react-router-dom";
 
 export default Index = () => {
     const [employees, setEmployees] = useState([]);
     const [args, setArgs] = useState({ q: '', gender: '' });
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getEmployees(args).then((response) => {
@@ -55,6 +58,15 @@ export default Index = () => {
             </div>
             <div className="mt-2"/>
             <Table employees={employees}/>
+            <hr/>
+            <button
+                className="btn btn-secondary"
+                onClick={() => {
+                    navigate('/');
+                }}
+            >
+                Back to Dashboard
+            </button>
         </div>
     )
 }
