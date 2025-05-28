@@ -104,8 +104,9 @@ export default Form = () => {
                             mobileNumber: event.target.value
                         })
                     }}
-                    className="form-control"
+                    className={getInputClassName(errors, 'mobileNumber')}
                 />
+                {renderInputErrors(errors, 'mobileNumber')}
             </div>
             <hr/>
             {isLoading &&
