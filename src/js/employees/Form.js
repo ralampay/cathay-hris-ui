@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EMPLOYEE } from "../models/employee";
 import { EMPLOYEE_RATE } from "../models/employeeRate";
 import { formatMobileNumber, getInputClassName, renderInputErrors } from "../utils";
@@ -18,11 +18,13 @@ export default Form = () => {
         id
     } = useParams();
 
-    if (id) {
-        getEmployee(id).then((response) => {
-            setEmployee(response.data);
-        })
-    }
+    useEffect(() => {
+        if (id) {
+            getEmployee(id).then((response) => {
+                setEmployee(response.data);
+            })
+        }
+    }, [])
 
     const handleSave = () => {
         setIsLoading(true);
