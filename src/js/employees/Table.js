@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default Table = ({ employees }) => {
 
@@ -43,7 +45,10 @@ export default Table = ({ employees }) => {
                                         navigate(`/employees/${employee.id}`)
                                     }}
                                 >
-                                    Show
+                                    <FontAwesomeIcon icon={faMagnifyingGlass}/>
+                                    <span className="ms-2">
+                                        Show
+                                    </span>
                                 </button>
                             </td>
                         </tr>

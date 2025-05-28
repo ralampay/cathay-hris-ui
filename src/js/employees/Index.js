@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import { getEmployees } from "../services/EmployeeService";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default Index = () => {
     const [employees, setEmployees] = useState([]);
@@ -56,6 +58,19 @@ export default Index = () => {
                     </div>
                 </div>
             </div>
+            <hr/>
+            <button
+                className="btn btn-success"
+                onClick={() => {
+                    navigate(`/employees/new`)
+                }}
+            >
+                <FontAwesomeIcon icon={faPlus}/>
+                <span className="ms-2">
+                    New Employee
+                </span>
+            </button>
+            <hr/>
             <div className="mt-2"/>
             <Table employees={employees}/>
             <hr/>

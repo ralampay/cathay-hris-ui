@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import EmployeeIndex from "./employees/Index";
 import EmployeeShow from "./employees/Show";
+import EmployeeForm from "./employees/Form";
 import Dashboard from "./Dashboard";
 import {
     Routes,
@@ -10,11 +11,6 @@ import {
 } from "react-router-dom";
 
 export default App = () => {
-    // Exercise 1:
-    // - Create a new component called Dashboard
-    // - Map the path "/" to Dashboard
-    // - Create a button in dashboard that will navigate to EmployeeIndex
-    // - Map the path "/employees" to EmployeeIndex
     return (
         <div className="container">
             <Header/>
@@ -30,6 +26,14 @@ export default App = () => {
                 <Route
                     path="/employees/:id"
                     element={<EmployeeShow/>}
+                />
+                <Route
+                    path="/employees/new"
+                    element={<EmployeeForm/>}
+                />
+                <Route
+                    path="/employees/:id/edit"
+                    element={<EmployeeForm/>}
                 />
             </Routes>
             <Footer/>

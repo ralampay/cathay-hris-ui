@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getEmployee } from "../services/EmployeeService";
 import { EMPLOYEE } from "../models/employee";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default Show = () => {
 
@@ -29,12 +31,26 @@ export default Show = () => {
             </h1>
             <hr/>
             <button
-                className="btn btn-secondary"
+                className="btn btn-warning"
+                onClick={() => {
+                    navigate(`/employees/${id}/edit`)
+                }}
+            >
+                <FontAwesomeIcon icon={faPencil} />
+                <span className="ms-2">
+                    Edit
+                </span>
+            </button>
+            <button
+                className="btn btn-secondary ms-2"
                 onClick={() => {
                     navigate('/employees')
                 }}
             >
-                Back to Employees
+                <FontAwesomeIcon icon={faArrowLeft}/>
+                <span className="ms-2">
+                    Back to Employees
+                </span>
             </button>
         </div>
     )

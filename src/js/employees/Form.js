@@ -1,147 +1,120 @@
 import React, { useRef, useState } from "react";
 import { EMPLOYEE } from "../models/employee";
 import { EMPLOYEE_RATE } from "../models/employeeRate";
-import { formatMobileNumber } from "../utils";
+import { formatMobileNumber, getInputClassName, renderInputErrors } from "../utils";
+import { useParams, useNavigate } from "react-router-dom";
+import { saveEmployee, getEmployee } from "../services/EmployeeService";
+import Loader from "../Loader";
+import { snakeToCamel } from "../utils";
 
 export default Form = () => {
-    const [employee, setEmployee] = useState(EMPLOYEE);
+    const [employee, setEmployee]   = useState(EMPLOYEE);
     const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errors, setErrors]       = useState({});
 
-    const renderMobileErrorMessage = () => {
-        if (employee.mobileNumber.length != 9) {
-            setErrorMessage("Invalid mobile number");
-        } else {
-            setErrorMessage("Good job");
-        }
+    const navigate = useNavigate();
+
+    const {
+        id
+    } = useParams();
+
+    if (id) {
+        getEmployee(id).then((response) => {
+            setEmployee(response.data);
+        })
+    }
+
+    const handleSave = () => {
+        setIsLoading(true);
+        saveEmployee({...employee}).then((response) => {
+            navigate(`/employees/${response.data.id}`)
+        }).catch((payload) => {
+            let newErrors = snakeToCamel(payload.response.data);
+            console.log(newErrors);
+            setErrors(newErrors);
+            setIsLoading(false);
+        })
     }
 
     return (
         <div>
-            {errorMessage}
-            <h1>
-                Name: {employee.lastName}, {employee.firstName}
-            </h1>
-            <h2>
-                Mobile Number: {formatMobileNumber(employee.mobileNumber)}
-            </h2>
-            <label>
-                First Name:
-            </label>
-            <input
-                value={employee.firstName}
-                disabled={isLoading}
-                onChange={(event) => {
-                    setEmployee({...employee,
-                        firstName: event.target.value
-                    })
-                }}
-            />
+            <div className="form-group">
+                <label>
+                    First Name
+                </label>
+                <input
+                    value={employee.firstName}
+                    disabled={isLoading}
+                    onChange={(event) => {
+                        setEmployee({...employee, 
+                            firstName: event.target.value
+                        })
+                    }}
+                    className={getInputClassName(errors, 'firstName')}
+                />
+                {renderInputErrors(errors, 'firstName')}
+            </div>
+            <div className="mt-2"/>
+            <div className="form-group">
+                <label>
+                    Last Name
+                </label>
+                <input
+                    value={employee.lastName}
+                    disabled={isLoading}
+                    onChange={(event) => {
+                        setEmployee({...employee, 
+                            lastName: event.target.value
+                        })
+                    }}
+                    className="form-control"
+                />
+            </div>
+            <div className="mt-2"/>
+            <div className="form-group">
+                <label>
+                    Gender
+                </label>
+                <select
+                    value={employee.gender}
+                    disabled={isLoading}
+                    onChange={(event) => {
+                        setEmployee({...employee, 
+                            gender: event.target.value
+                        })
+                    }}
+                    className="form-control"
+                >
+                    <option value="">-- SELECT --</option>
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
+                </select>
+            </div>
+            <div className="form-group">
+                <label>
+                    Mobile Number
+                </label>
+                <input
+                    value={employee.mobileNumber}
+                    disabled={isLoading}
+                    onChange={(event) => {
+                        setEmployee({...employee,
+                            mobileNumber: event.target.value
+                        })
+                    }}
+                    className="form-control"
+                />
+            </div>
             <hr/>
-            <label>
-                Last Name:
-            </label>
-            <input
-                value={employee.lastName}
-                onChange={(event) => {
-                    setEmployee({...employee,
-                        lastName: event.target.value
-                    })
-                }}
-            />
-            <hr/>
-            <label>
-                Gender
-            </label>
-            <select
-                value={employee.gender}
-                disabled={isLoading}
-                onChange={(event) => {
-                    setEmployee({...employee,
-                        gender: event.target.value
-                    })
-                }}
-            >
-                <option value="">-- SELECT --</option>
-                <option value="F">Female</option>
-                <option value="M">Male</option>
-            </select>
-            <hr/>
-            <label>
-                Mobile Number
-            </label>
-            <input
-                value={employee.mobileNumber}
-                disabled={isLoading}
-                onChange={(event) => {
-                    let newMobileNumber = event.target.value;
-                    console.log(`newMobileNumber: ${newMobileNumber}`);
-
-                    renderMobileErrorMessage();
-                    setEmployee({...employee,
-                        mobileNumber: newMobileNumber
-                    })
-                }}
-            />
-            <hr/>
-            {employee.employeeRates.map((employeeRateObj, i) => {
-                return (
-                    <div>
-                        <input
-                            value={employeeRateObj.effectivityDate}
-                            type="date"
-                            onChange={(event) => {
-                                let newEmployee = {...employee};
-                                newEmployee.employeeRates[i].effectivityDate = event.target.value;
-                                
-                                setEmployee(newEmployee);
-                            }}
-                        />
-                        <input
-                            value={employeeRateObj.rate}
-                            type="number"
-                            onChange={(event) => {
-                                let newEmployee = {...employee};
-                                newEmployee.employeeRates[i].rate = event.target.value;
-                                
-                                setEmployee(newEmployee);
-                            }}
-                        />
-                    </div>
-                )
-            })}
-            <hr/>
+            {isLoading &&
+                <Loader/>
+            }
             <button
-                disabled={isLoading}
-                onClick={() => {
-                    console.log("Saving employee...");
-                    setIsLoading(true);
-                }}
+                className="btn btn-primary"
+                onClick={handleSave}
             >
                 Save
             </button>
-            <button
-                onClick={() => {
-                    setEmployee({...EMPLOYEE})
-                }}
-            >
-                Clear
-            </button>
-            <button
-                onClick={() => {
-                    let newRates = [...employee.employeeRates];
-                    newRates.push({...EMPLOYEE_RATE});
-
-                    setEmployee({...employee,
-                        employeeRates: newRates
-                    })
-
-                    console.log(employee);
-                }}
-            >
-                Add Employee Rate
-            </button>
-            <hr/>
         </div>
     )
 }
