@@ -11,11 +11,15 @@ export default Index = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const refreshEmployees = () => {
         getEmployees(args).then((response) => {
             console.log(response.data);
             setEmployees(response.data);
         })
+    }
+
+    useEffect(() => {
+        refreshEmployees();
     }, [args])
 
     return (
@@ -72,7 +76,10 @@ export default Index = () => {
             </button>
             <hr/>
             <div className="mt-2"/>
-            <Table employees={employees}/>
+            <Table 
+                employees={employees}
+                refresh={refreshEmployees}
+            />
             <hr/>
             <button
                 className="btn btn-secondary"

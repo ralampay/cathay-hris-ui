@@ -15,6 +15,7 @@ export default Show = () => {
     // 3. Integrate with delete API
     // 4. On success of delete, close modal and redirect to /employees
     // 5. (Challenge) Integrate delete with Table of employees
+    //      - Message of modal: Are you sure you want to delete [name of employee]
 
     const [employee, setEmployee] = useState(EMPLOYEE);
     const [isDeleteShow, setIsDeleteShow] = useState(false);
@@ -42,7 +43,7 @@ export default Show = () => {
                     Confirmation
                 </Modal.Header>
                 <Modal.Body>
-                    Are you sure?
+                    Are you sure you want to delete {employee.firstName} {employee.lastName}?
                 </Modal.Body>
                 <Modal.Footer>
                     <button
