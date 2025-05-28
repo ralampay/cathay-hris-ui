@@ -1,6 +1,9 @@
 import axios from "axios";
 import { camelToSnake } from "../utils";
 
+/** 
+ * Employees Functionality
+*/
 export const getEmployees = (args = {}) => {
     return axios.get(
         `${API_BASE_URL}/employees`, 
@@ -35,5 +38,21 @@ export const getEmployee = (id) => {
 export const deleteEmployee = (id) => {
     return axios.delete(
         `${API_BASE_URL}/employees/${id}`
+    )
+}
+
+/**
+ * Rates Functionality
+ */
+export const getRates = (id) => {
+    return axios.get(
+        `${API_BASE_URL}/employees/${id}/rates`
+    )
+}
+
+export const createRate = (id, rate) => {
+    return axios.post(
+        `${API_BASE_URL}/employees/${id}/rates`,
+        rate
     )
 }

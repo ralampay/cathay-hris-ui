@@ -4,15 +4,24 @@ import { getEmployee } from "../services/EmployeeService";
 import { EMPLOYEE } from "../models/employee";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faArrowLeft, faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faArrowLeft, faPrint, faAdd } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { buildDocDefinition } from "./Print";
 
+/**
+ * FINAL TEST
+ * 1. Display rates of given employee in a table
+ * 2. On click of Add Rate, show a modal that contains the rate form
+ * 3. On save of rate, refresh the rates of the employee
+ * 4. (CHALLENGE) On print of employee, print all rates
+ */
 export default Show = () => {
     const [employee, setEmployee] = useState(EMPLOYEE);
     const [isDeleteShow, setIsDeleteShow] = useState(false);
+
+    const [rates, setRates] = useState([]);
 
     const navigate = useNavigate();
 
@@ -89,6 +98,15 @@ export default Show = () => {
                 }}
             >
                 <FontAwesomeIcon icon={faPrint} />
+            </button>
+
+            <button
+                className="btn btn-success"
+            >
+                <FontAwesomeIcon icon={faAdd}/>
+                <span className="ms-2">
+                    Add Rate
+                </span>
             </button>
         </div>
     )
