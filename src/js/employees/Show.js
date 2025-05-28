@@ -4,19 +4,13 @@ import { getEmployee } from "../services/EmployeeService";
 import { EMPLOYEE } from "../models/employee";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faArrowLeft, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { buildDocDefinition } from "./Print";
 
 export default Show = () => {
-
-    // Exercise:
-    // 1. Add a confirm button to the modal
-    // 2. When use clicks confirm, setIsLoading to true to disable buttons
-    // 3. Integrate with delete API
-    // 4. On success of delete, close modal and redirect to /employees
-    // 5. (Challenge) Integrate delete with Table of employees
-    //      - Message of modal: Are you sure you want to delete [name of employee]
-
     const [employee, setEmployee] = useState(EMPLOYEE);
     const [isDeleteShow, setIsDeleteShow] = useState(false);
 
@@ -87,6 +81,14 @@ export default Show = () => {
                 <span className="ms-2">
                     Back to Employees
                 </span>
+            </button>
+            <button
+                className="btn btn-primary ms-2"
+                onClick={() => {
+                    pdfMake.createPdf(buildDocDefinition(employee)).open();
+                }}
+            >
+                <FontAwesomeIcon icon={faPrint} />
             </button>
         </div>
     )
